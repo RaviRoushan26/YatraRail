@@ -59,17 +59,22 @@ The project is designed to provide a simple interface for passengers to search f
 ## 4. Project Directory Structure
 
 ```text
-RailwayReservationWeb/
+YatraRail/
 │
 ├── .vscode/
 │
 ├── backend/
 │   ├── include/
+│   │   └── Header files (.h)
+│   │
 │   ├── src/
+│   │   └── Source files (.cpp)
+│   │
 │   ├── third_party/
 │   │   └── Crow/
+│   │
 │   ├── CMakeLists.txt
-│   └── build/              (Generated during compilation)
+│   └── build/                 # Generated during compilation
 │
 ├── database/
 │   └── railway_schema.sql
@@ -78,6 +83,20 @@ RailwayReservationWeb/
 │   ├── index.html
 │   ├── style.css
 │   └── script.js
+│
+├── screenshots/
+│   ├── homepage.png
+│   ├── passenger-login.png
+│   ├── passenger-registration.png
+│   ├── train-search-results.png
+│   ├── ticket-booking.png
+│   ├── booking-confirmation.png
+│   ├── pnr-status.png
+│   ├── ticket-cancellation.png
+│   ├── admin-dashboard.png
+│   ├── admin-train-management.png
+│   ├── admin-booking-management.png
+│   └── admin-passenger-management.png
 │
 ├── .gitignore
 └── README.md
