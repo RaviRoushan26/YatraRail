@@ -1,0 +1,1632 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YatraRail | Admin Console</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            color: #20283a;
+        }
+
+        button, input { font: inherit; }
+
+        .brand-lockup{display:flex;align-items:center;gap:12px;color:#102b4e;font-size:19px;font-weight:800;letter-spacing:.4px;line-height:1.05;margin-bottom:28px}
+        .brand-lockup svg{width:48px;height:40px;flex:none}
+        .brand-lockup .brand-accent{color:#d88b35}
+        .brand-lockup small{display:block;margin-top:5px;color:#7b8798;font-size:8px;letter-spacing:2px;font-weight:700}
+        .admin-brand-heading{display:flex;align-items:baseline;gap:10px}
+        .admin-brand-heading span{font-size:13px;font-weight:500;opacity:.8}
+        .login-card .brand-lockup{margin-bottom:28px}
+
+
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            padding: 38px;
+            border-radius: 14px;
+            box-shadow: 0 10px 35px rgba(0,0,0,.08);
+        }
+
+        .brand {
+            color: #173b70;
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 28px;
+        }
+
+        h1 {
+            font-size: 25px;
+            margin-bottom: 9px;
+        }
+
+        .muted {
+            color: #7a8495;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+            margin: 19px 0 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dce1e9;
+            border-radius: 7px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #315b94;
+        }
+
+        button {
+            border: none;
+            border-radius: 7px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #173b70;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #102c56;
+        }
+
+        .login-button {
+            width: 100%;
+            margin-top: 24px;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #c0392b;
+            line-height: 1.5;
+        }
+
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: #173b70;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topbar h2 {
+            font-size: 22px;
+        }
+
+        .topbar button {
+            background: white;
+            color: #173b70;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: calc(100vh - 65px);
+        }
+
+        .sidebar {
+            background: white;
+            padding: 25px 15px;
+            border-right: 1px solid #e6eaf0;
+        }
+
+        .sidebar button {
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            color: #526078;
+            margin-bottom: 9px;
+        }
+
+        .sidebar button.active,
+        .sidebar button:hover {
+            background: #edf2fa;
+            color: #173b70;
+        }
+
+        .content {
+            padding: 32px;
+            min-width: 0;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-heading {
+            margin-bottom: 24px;
+        }
+
+        .section-heading h1 {
+            font-size: 27px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 23px;
+            border-radius: 10px;
+            border: 1px solid #e8ebf1;
+        }
+
+        .stat-card p {
+            color: #7a8495;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h2 {
+            font-size: 29px;
+            color: #173b70;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e8ebf1;
+            border-radius: 10px;
+            padding: 23px;
+            margin-bottom: 22px;
+        }
+
+        .panel h3 {
+            margin-bottom: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0 18px;
+        }
+
+        .form-grid .full {
+            grid-column: 1 / -1;
+        }
+
+        .form-grid button {
+            margin-top: 22px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e8ebf1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f8f9fc;
+            color: #667085;
+        }
+
+        .delete-button {
+            background: #fde8e8;
+            color: #bd3030;
+            padding: 8px 12px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .confirmed {
+            background: #e4f7ec;
+            color: #167342;
+        }
+
+        .cancelled {
+            background: #fde8e8;
+            color: #bd3030;
+        }
+
+        .empty {
+            padding: 25px;
+            text-align: center;
+            color: #7a8495;
+        }
+
+        .notice {
+            margin-top: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media(max-width: 800px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: flex;
+                overflow-x: auto;
+                gap: 8px;
+                padding: 12px;
+            }
+
+            .sidebar button {
+                width: auto;
+                white-space: nowrap;
+                margin: 0;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 520px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid .full {
+                grid-column: auto;
+            }
+        }
+
+                /* ==========================================
+        YATRARAIL ADMIN — NAVY PREMIUM REDESIGN
+        Add this below the existing admin CSS
+        ========================================== */
+
+        :root {
+            --admin-navy: #071a33;
+            --admin-navy-light: #102b50;
+            --admin-orange: #f5a623;
+            --admin-white: #ffffff;
+            --admin-background: #f3f6fb;
+            --admin-text: #17243a;
+            --admin-muted: #77849a;
+            --admin-border: #e2e8f0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--admin-background);
+            color: var(--admin-text);
+        }
+
+        /* Login screen */
+
+        .login-screen {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(7, 26, 51, .97),
+                    rgba(16, 43, 80, .93)
+                );
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-screen::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 50%;
+            right: -120px;
+            top: -150px;
+        }
+
+        .login-screen::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(245,166,35,.25);
+            border-radius: 50%;
+            left: -100px;
+            bottom: -120px;
+        }
+
+        .login-card {
+            position: relative;
+            z-index: 1;
+            max-width: 440px;
+            padding: 42px;
+            border-radius: 18px;
+            box-shadow: 0 25px 70px rgba(0,0,0,.25);
+        }
+
+        .brand {
+            color: var(--admin-navy);
+            font-size: 27px;
+            letter-spacing: -.5px;
+        }
+
+        .brand::first-letter {
+            color: var(--admin-orange);
+        }
+
+        .login-card h1 {
+            color: var(--admin-navy);
+            font-size: 29px;
+        }
+
+        .login-card .muted {
+            color: var(--admin-muted);
+        }
+
+        .login-card input {
+            background: #fbfcfe;
+            border: 1px solid var(--admin-border);
+            border-radius: 9px;
+            padding: 14px;
+            transition: .2s;
+        }
+
+        .login-card input:focus {
+            border-color: var(--admin-orange);
+            box-shadow: 0 0 0 3px rgba(245,166,35,.13);
+        }
+
+        /* Buttons */
+
+        button {
+            transition: background .2s, transform .2s, box-shadow .2s;
+        }
+
+        .primary {
+            background: var(--admin-navy);
+            color: white;
+            border-radius: 9px;
+        }
+
+        .primary:hover {
+            background: var(--admin-navy-light);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(7,26,51,.18);
+        }
+
+        .login-button {
+            padding: 14px;
+        }
+
+        /* Dashboard top bar */
+
+        .topbar {
+            background: var(--admin-navy);
+            padding: 19px 5%;
+            box-shadow: 0 4px 18px rgba(7,26,51,.15);
+        }
+
+        .topbar h2 {
+            font-size: 23px;
+            letter-spacing: -.3px;
+        }
+
+        .topbar button {
+            background: white;
+            color: var(--admin-navy);
+            border-radius: 8px;
+            padding: 11px 20px;
+        }
+
+        .topbar button:hover {
+            background: var(--admin-orange);
+            color: var(--admin-navy);
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            background: var(--admin-navy);
+            border-right: none;
+            padding: 28px 15px;
+        }
+
+        .sidebar button {
+            color: #c5d0df;
+            border-radius: 9px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar button.active,
+        .sidebar button:hover {
+            background: rgba(255,255,255,.12);
+            color: white;
+        }
+
+        .sidebar button.active {
+            border-left: 3px solid var(--admin-orange);
+        }
+
+        /* Main content */
+
+        .content {
+            padding: 36px;
+        }
+
+        .section-heading h1 {
+            color: var(--admin-navy);
+            font-size: 29px;
+            letter-spacing: -.5px;
+        }
+
+        .section-heading {
+            margin-bottom: 28px;
+        }
+
+        .muted {
+            color: var(--admin-muted);
+        }
+
+        /* Statistics cards */
+
+        .stats {
+            gap: 20px;
+        }
+
+        .stat-card {
+            border: 1px solid var(--admin-border);
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 5px 18px rgba(15,35,65,.035);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            width: 5px;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: var(--admin-orange);
+        }
+
+        .stat-card p {
+            color: var(--admin-muted);
+            font-size: 14px;
+        }
+
+        .stat-card h2 {
+            color: var(--admin-navy);
+            font-size: 34px;
+        }
+
+        /* Panels */
+
+        .panel {
+            border: 1px solid var(--admin-border);
+            border-radius: 14px;
+            padding: 26px;
+            box-shadow: 0 5px 18px rgba(15,35,65,.035);
+        }
+
+        .panel h3 {
+            color: var(--admin-navy);
+            font-size: 19px;
+        }
+
+        /* Forms */
+
+        label {
+            color: #34445d;
+        }
+
+        input {
+            border: 1px solid var(--admin-border);
+            border-radius: 9px;
+            padding: 13px;
+        }
+
+        input:focus {
+            border-color: var(--admin-orange);
+            box-shadow: 0 0 0 3px rgba(245,166,35,.12);
+        }
+
+        /* Tables */
+
+        .table-wrap {
+            border: 1px solid var(--admin-border);
+            border-radius: 12px;
+            box-shadow: 0 5px 18px rgba(15,35,65,.035);
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th {
+            background: var(--admin-navy);
+            color: white;
+            font-weight: 600;
+            padding: 16px;
+        }
+
+        td {
+            color: #34445d;
+            padding: 15px;
+        }
+
+        tbody tr:hover {
+            background: #f7f9fc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Delete button */
+
+        .delete-button {
+            background: #fff0ef;
+            color: #c0392b;
+            border-radius: 7px;
+        }
+
+        .delete-button:hover {
+            background: #c0392b;
+            color: white;
+        }
+
+        /* Booking statuses */
+
+        .confirmed {
+            background: #e3f7ec;
+            color: #167342;
+        }
+
+        .cancelled {
+            background: #fff0ef;
+            color: #bd3030;
+        }
+
+        /* Messages */
+
+        .message,
+        .notice {
+            line-height: 1.6;
+        }
+
+        /* Responsive dashboard */
+
+        @media (max-width: 800px) {
+            .content {
+                padding: 22px 16px;
+            }
+
+            .sidebar {
+                background: var(--admin-navy);
+                padding: 12px;
+            }
+
+            .sidebar button {
+                flex-shrink: 0;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .login-card {
+                padding: 28px 22px;
+            }
+
+            .topbar {
+                padding: 15px 18px;
+            }
+
+            .topbar h2 {
+                font-size: 18px;
+            }
+
+            .section-heading h1 {
+                font-size: 24px;
+            }
+        }
+
+        .admin-brand-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+
+        .admin-brand-heading svg {
+            width: 42px;
+            height: 34px;
+            flex-shrink: 0;
+        }
+
+        .admin-brand-heading .brand-accent {
+            color: #f5a623;
+        }
+
+        .admin-brand-heading span {
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,.55);
+            border-radius: 8px;
+            padding: 11px 18px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: .2s;
+        }
+
+        .home-button:hover {
+            background: #f5a623;
+            color: #071a33;
+            border-color: #f5a623;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ADMIN LOGIN -->
+
+    <div class="login-screen" id="loginScreen">
+
+        <div class="login-card">
+
+            <div class="brand brand-lockup"><svg viewBox="0 0 64 48" aria-hidden="true"><path d="M13 5h38a6 6 0 0 1 6 6v23a6 6 0 0 1-6 6H13a6 6 0 0 1-6-6V11a6 6 0 0 1 6-6Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M14 14h36v13H14zM20 39l-6 6M44 39l6 6M21 33h22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="33" r="2" fill="currentColor"/><circle cx="44" cy="33" r="2" fill="currentColor"/></svg><span>YATRA<span class="brand-accent">RAIL</span><small>INDIAN RAILWAYS</small></span></div>
+
+            <h1>Admin Console</h1>
+
+            <p class="muted">
+                Sign in to manage trains, passengers and reservations.
+            </p>
+
+            <form id="loginForm">
+
+                <label for="adminUsername">Admin Username</label>
+                <input
+                    type="text"
+                    id="adminUsername"
+                    required
+                    autocomplete="username"
+                >
+
+                <label for="adminPassword">Password</label>
+                <input
+                    type="password"
+                    id="adminPassword"
+                    required
+                    autocomplete="current-password"
+                >
+
+                <button class="primary login-button" type="submit">
+                    Sign In
+                </button>
+
+                <p class="message" id="loginMessage"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADMIN DASHBOARD -->
+
+    <div class="dashboard" id="dashboard">
+
+        <header class="topbar">
+
+            <h2 class="admin-brand-heading">
+                <svg viewBox="0 0 64 48" aria-hidden="true">
+                    <path d="M13 5h38a6 6 0 0 1 6 6v23a6 6 0 0 1-6 6H13a6 6 0 0 1-6-6V11a6 6 0 0 1 6-6Z"
+                        fill="none" stroke="currentColor" stroke-width="3"/>
+                    <path d="M14 14h36v13H14zM20 39l-6 6M44 39l6 6M21 33h22"
+                        fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round"/>
+                    <circle cx="20" cy="33" r="2" fill="currentColor"/>
+                    <circle cx="44" cy="33" r="2" fill="currentColor"/>
+                </svg>
+
+                <span style="font-size:22px;font-weight:800;opacity:1;">
+                    YATRA<span class="brand-accent">RAIL</span>
+                </span>
+
+                <span>Admin Console</span>
+            </h2>
+
+            <div style="display:flex; align-items:center; gap:12px;">
+
+                <a href="index.html" class="home-button">
+                    ⌂ Home Page
+                </a>
+
+                <button id="logoutButton">
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <div class="layout">
+
+            <aside class="sidebar">
+
+                <button class="active" data-section="overview">
+                    Overview
+                </button>
+
+                <button data-section="trains">
+                    Manage Trains
+                </button>
+
+                <button data-section="bookings">
+                    All Bookings
+                </button>
+
+                <button data-section="passengers">
+                    Passengers
+                </button>
+
+            </aside>
+
+
+            <main class="content">
+
+                <!-- OVERVIEW -->
+
+                <section class="section active" id="overview">
+
+                    <div class="section-heading">
+                        <h1>Dashboard Overview</h1>
+                        <p class="muted">
+                            Manage your railway reservation system.
+                        </p>
+                    </div>
+
+                    <div class="stats">
+
+                        <div class="stat-card">
+                            <p>Total Trains</p>
+                            <h2 id="totalTrains">0</h2>
+                        </div>
+
+                        <div class="stat-card">
+                            <p>Total Bookings</p>
+                            <h2 id="totalBookings">0</h2>
+                        </div>
+
+                        <div class="stat-card">
+                            <p>Registered Passengers</p>
+                            <h2 id="totalPassengers">0</h2>
+                        </div>
+
+                    </div>
+
+                    <div class="panel">
+                        <h3>Welcome, Administrator</h3>
+                        <p class="muted">
+                            Use the navigation panel to add or remove trains,
+                            review passenger bookings and view registered users.
+                        </p>
+                    </div>
+
+                </section>
+
+
+                <!-- TRAIN MANAGEMENT -->
+
+                <section class="section" id="trains">
+
+                    <div class="section-heading">
+                        <h1>Manage Trains</h1>
+                        <p class="muted">
+                            Add new trains and manage existing routes.
+                        </p>
+                    </div>
+
+                    <div class="panel">
+
+                        <h3>Add New Train</h3>
+
+                        <form id="addTrainForm">
+
+                            <div class="form-grid">
+
+                                <div>
+                                    <label for="trainNumber">
+                                        Train Number
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="trainNumber"
+                                        min="1"
+                                        required
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="trainName">
+                                        Train Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="trainName"
+                                        required
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="trainSource">
+                                        Source
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="trainSource"
+                                        required
+                                    >
+                                </div>
+
+                                <div>
+                                    <label for="trainDestination">
+                                        Destination
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="trainDestination"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="full">
+                                    <label for="trainFare">
+                                        Base Fare (₹)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="trainFare"
+                                        min="1"
+                                        step="0.01"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="full">
+                                    <button
+                                        class="primary"
+                                        type="submit"
+                                    >
+                                        Add Train
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <p class="notice" id="trainMessage"></p>
+
+                        </form>
+
+                    </div>
+
+
+                    <h3 style="margin: 25px 0 15px;">
+                        Existing Trains
+                    </h3>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Name</th>
+                                    <th>Source</th>
+                                    <th>Destination</th>
+                                    <th>Fare</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="trainsTable">
+                                <tr>
+                                    <td colspan="6" class="empty">
+                                        Loading trains...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+
+                <!-- BOOKINGS -->
+
+                <section class="section" id="bookings">
+
+                    <div class="section-heading">
+                        <h1>All Bookings</h1>
+                        <p class="muted">
+                            View reservations made by all passengers.
+                        </p>
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>PNR</th>
+                                    <th>Passenger</th>
+                                    <th>Train</th>
+                                    <th>Route</th>
+                                    <th>Date</th>
+                                    <th>Seat</th>
+                                    <th>Class</th>
+                                    <th>Fare</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="bookingsTable">
+                                <tr>
+                                    <td colspan="9" class="empty">
+                                        Loading bookings...
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PASSENGERS -->
+
+                <section class="section" id="passengers">
+
+                    <div class="section-heading">
+                        <h1>Registered Passengers</h1>
+                        <p class="muted">
+                            View accounts registered in YatraRail.
+                        </p>
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Account Type</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="passengersTable">
+                                <tr>
+                                    <td colspan="2" class="empty">
+                                        Loading passengers...
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const API = "http://localhost:18080";
+
+        let adminToken = sessionStorage.getItem("railbookAdminToken");
+
+        const loginScreen =
+            document.getElementById("loginScreen");
+
+        const dashboard =
+            document.getElementById("dashboard");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const loginMessage =
+            document.getElementById("loginMessage");
+
+
+        // ---------------- API HELPER ----------------
+
+        async function apiRequest(path, options = {}) {
+
+            const headers = {
+                "Content-Type": "application/json",
+                ...(options.headers || {})
+            };
+
+            if (adminToken) {
+                headers.Authorization = "Bearer " + adminToken;
+            }
+
+            const response = await fetch(API + path, {
+                ...options,
+                headers
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401 ||
+                response.status === 403) {
+
+                logout();
+
+                throw new Error(
+                    data.message || "Admin session expired."
+                );
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Request failed."
+                );
+            }
+
+            return data;
+        }
+
+
+        // ---------------- LOGIN ----------------
+
+        loginForm.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            loginMessage.textContent = "Signing in...";
+
+            const username =
+                document.getElementById("adminUsername").value.trim();
+
+            const password =
+                document.getElementById("adminPassword").value;
+
+            try {
+
+                const response = await fetch(
+                    API + "/api/admin/session",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            username,
+                            password
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message || "Admin login failed."
+                    );
+                }
+
+                adminToken = data.token;
+
+                sessionStorage.setItem(
+                    "railbookAdminToken",
+                    adminToken
+                );
+
+                loginScreen.style.display = "none";
+                dashboard.style.display = "block";
+
+                await loadDashboard();
+
+            }
+            catch(error) {
+
+                loginMessage.textContent = error.message;
+
+            }
+
+        });
+
+
+        // ---------------- LOGOUT ----------------
+
+        function logout() {
+
+            adminToken = null;
+
+            sessionStorage.removeItem("railbookAdminToken");
+
+            dashboard.style.display = "none";
+            loginScreen.style.display = "flex";
+
+            document.getElementById("adminPassword").value = "";
+
+        }
+
+        document.getElementById("logoutButton")
+            .addEventListener("click", logout);
+
+
+        // ---------------- NAVIGATION ----------------
+
+        document.querySelectorAll("[data-section]")
+            .forEach(button => {
+
+                button.addEventListener("click", async function() {
+
+                    document.querySelectorAll("[data-section]")
+                        .forEach(item => item.classList.remove("active"));
+
+                    document.querySelectorAll(".section")
+                        .forEach(item => item.classList.remove("active"));
+
+                    button.classList.add("active");
+
+                    const section =
+                        document.getElementById(button.dataset.section);
+
+                    section.classList.add("active");
+
+                    try {
+
+                        if (button.dataset.section === "overview") {
+                            await loadDashboard();
+                        }
+
+                        if (button.dataset.section === "trains") {
+                            await loadTrains();
+                        }
+
+                        if (button.dataset.section === "bookings") {
+                            await loadBookings();
+                        }
+
+                        if (button.dataset.section === "passengers") {
+                            await loadPassengers();
+                        }
+
+                    }
+                    catch(error) {
+                        alert(error.message);
+                    }
+
+                });
+
+            });
+
+
+        // ---------------- DASHBOARD ----------------
+
+        async function loadDashboard() {
+
+            const [trains, bookings, passengers] =
+                await Promise.all([
+                    apiRequest("/api/admin/trains"),
+                    apiRequest("/api/admin/bookings"),
+                    apiRequest("/api/admin/passengers")
+                ]);
+
+            document.getElementById("totalTrains").textContent =
+                trains.trains.length;
+
+            document.getElementById("totalBookings").textContent =
+                bookings.bookings.length;
+
+            document.getElementById("totalPassengers").textContent =
+                passengers.passengers.length;
+
+        }
+
+
+        // ---------------- LOAD TRAINS ----------------
+
+        async function loadTrains() {
+
+            const data =
+                await apiRequest("/api/admin/trains");
+
+            const table =
+                document.getElementById("trainsTable");
+
+            table.replaceChildren();
+
+            if (!data.trains.length) {
+
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty">
+                            No trains available.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+            data.trains.forEach(train => {
+
+                const row = document.createElement("tr");
+
+                const values = [
+                    train.trainNumber,
+                    train.trainName,
+                    train.source,
+                    train.destination,
+                    "₹" + Number(train.fare).toFixed(2)
+                ];
+
+                values.forEach(value => {
+
+                    const cell = document.createElement("td");
+
+                    cell.textContent = value;
+
+                    row.appendChild(cell);
+
+                });
+
+                const actionCell =
+                    document.createElement("td");
+
+                const deleteButton =
+                    document.createElement("button");
+
+                deleteButton.className = "delete-button";
+
+                deleteButton.textContent = "Delete";
+
+                deleteButton.addEventListener("click", async function() {
+
+                    const confirmed = confirm(
+                        "Delete train " + train.trainNumber + "?"
+                    );
+
+                    if (!confirmed) return;
+
+                    try {
+
+                        const result = await apiRequest(
+                            "/api/admin/trains/" + train.trainNumber,
+                            {
+                                method: "DELETE"
+                            }
+                        );
+
+                        alert(result.message);
+
+                        await loadTrains();
+                        await loadDashboard();
+
+                    }
+                    catch(error) {
+                        alert(error.message);
+                    }
+
+                });
+
+                actionCell.appendChild(deleteButton);
+                row.appendChild(actionCell);
+
+                table.appendChild(row);
+
+            });
+
+        }
+
+
+        // ---------------- ADD TRAIN ----------------
+
+        document.getElementById("addTrainForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+                const message =
+                    document.getElementById("trainMessage");
+
+                const train = {
+
+                    trainNumber: Number(
+                        document.getElementById("trainNumber").value
+                    ),
+
+                    trainName:
+                        document.getElementById("trainName").value.trim(),
+
+                    source:
+                        document.getElementById("trainSource").value.trim(),
+
+                    destination:
+                        document.getElementById("trainDestination").value.trim(),
+
+                    fare: Number(
+                        document.getElementById("trainFare").value
+                    )
+
+                };
+
+                try {
+
+                    const result = await apiRequest(
+                        "/api/admin/trains",
+                        {
+                            method: "POST",
+                            body: JSON.stringify(train)
+                        }
+                    );
+
+                    message.style.color = "green";
+                    message.textContent = result.message;
+
+                    this.reset();
+
+                    await loadTrains();
+                    await loadDashboard();
+
+                }
+                catch(error) {
+
+                    message.style.color = "#c0392b";
+                    message.textContent = error.message;
+
+                }
+
+            });
+
+
+        // ---------------- LOAD BOOKINGS ----------------
+
+        async function loadBookings() {
+
+            const data =
+                await apiRequest("/api/admin/bookings");
+
+            const table =
+                document.getElementById("bookingsTable");
+
+            table.replaceChildren();
+
+            if (!data.bookings.length) {
+
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="empty">
+                            No bookings found.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+            data.bookings.forEach(booking => {
+
+                const row = document.createElement("tr");
+
+                const values = [
+                    booking.pnr,
+                    booking.username,
+                    booking.trainName,
+                    booking.source + " → " + booking.destination,
+                    booking.journeyDate,
+                    booking.seatNumber,
+                    booking.classType,
+                    "₹" + Number(booking.fare).toFixed(2)
+                ];
+
+                values.forEach(value => {
+
+                    const cell = document.createElement("td");
+
+                    cell.textContent = value;
+
+                    row.appendChild(cell);
+
+                });
+
+                const statusCell =
+                    document.createElement("td");
+
+                const status =
+                    document.createElement("span");
+
+                status.className =
+                    "status " +
+                    (booking.status === "Cancelled"
+                        ? "cancelled"
+                        : "confirmed");
+
+                status.textContent = booking.status;
+
+                statusCell.appendChild(status);
+                row.appendChild(statusCell);
+
+                table.appendChild(row);
+
+            });
+
+        }
+
+
+        // ---------------- LOAD PASSENGERS ----------------
+
+        async function loadPassengers() {
+
+            const data =
+                await apiRequest("/api/admin/passengers");
+
+            const table =
+                document.getElementById("passengersTable");
+
+            table.replaceChildren();
+
+            if (!data.passengers.length) {
+
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="2" class="empty">
+                            No registered passengers found.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+            data.passengers.forEach(passenger => {
+
+                const row = document.createElement("tr");
+
+                const username =
+                    document.createElement("td");
+
+                username.textContent = passenger.username;
+
+                const role =
+                    document.createElement("td");
+
+                role.textContent = passenger.role;
+
+                row.append(username, role);
+
+                table.appendChild(row);
+
+            });
+
+        }
+
+
+        // ---------------- RESTORE SESSION ----------------
+
+        async function restoreSession() {
+
+            if (!adminToken) return;
+
+            try {
+
+                await loadDashboard();
+
+                loginScreen.style.display = "none";
+                dashboard.style.display = "block";
+
+            }
+            catch(error) {
+
+                logout();
+
+            }
+
+        }
+
+        restoreSession();
+
+    </script>
+
+</body>
+</html>

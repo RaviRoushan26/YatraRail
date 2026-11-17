@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#102b4e">
+
+    <title>YatraRail | Indian Railway Reservations</title>
+    <meta name="description" content="Search Indian trains, explore routes and manage your railway reservations with YatraRail.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Unified YatraRail branding */
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+        }
+
+        .brand-train-icon {
+            width: 49px;
+            height: 42px;
+            flex-shrink: 0;
+            color: #102b4e;
+        }
+
+        .brand-name {
+            display: block;
+            color: #102b4e;
+            font-family: "Manrope", sans-serif;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: .5px;
+            line-height: 1.1;
+        }
+
+        .brand-name > span {
+            color: #d88b35;
+        }
+
+        .brand-name small {
+            display: block;
+            margin-top: 5px;
+            color: #748196;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .modal-brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-bottom: 22px;
+        }
+
+        .footer-brand .brand-train-icon {
+            color: #ffffff;
+        }
+
+        .footer-brand .brand-name {
+            color: #ffffff;
+        }
+
+        .footer-brand .brand-name small {
+            color: #a9b8ca;
+        }
+
+        @media (max-width: 520px) {
+            .brand-train-icon {
+                width: 42px;
+                height: 37px;
+            }
+
+            .brand-name {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="navbar">
+
+        <a href="#home" class="brand" aria-label="YatraRail home">
+            <svg class="brand-train-icon" viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M13 5h38a6 6 0 0 1 6 6v23a6 6 0 0 1-6 6H13a6 6 0 0 1-6-6V11a6 6 0 0 1 6-6Z" fill="none" stroke="currentColor" stroke-width="3"/>
+                <path d="M14 14h36v13H14z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                <path d="M20 39l-6 6M44 39l6 6M21 33h22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="20" cy="33" r="2" fill="currentColor"/>
+                <circle cx="44" cy="33" r="2" fill="currentColor"/>
+                <path d="M25 5V2m14 3V2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span class="brand-name">
+                YATRA<span>RAIL</span>
+                <small>INDIAN RAILWAYS</small>
+            </span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#booking">Book tickets</a></li>
+            <li><a href="#featured-trains">Featured trains</a></li>
+            <li><a href="#features">About</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <a href="admin.html" class="admin-link">Admin</a>
+
+            <button class="login-btn" id="loginBtn">Login</button>
+
+            <button class="register-btn" id="registerBtn">Create account</button>
+
+            <button class="register-btn" id="myBookingsBtn" style="display:none;">
+                My bookings
+            </button>
+
+            <button class="register-btn" id="logoutBtn" style="display:none;">
+                Logout
+            </button>
+        </div>
+
+    </nav>
+</header>
+
+
+<main>
+
+    <!-- HERO AND BOOKING PANEL -->
+    <section class="hero-section" id="home">
+
+        <div class="hero-layout">
+
+            <div class="hero-visual">
+
+                <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Vande%20Bharat%20Express.jpg"
+                    alt="Vande Bharat Express at Mumbai Central"
+                    class="hero-train-image"
+                    fetchpriority="high"
+                >
+
+                <div class="hero-image-shade"></div>
+
+                <div class="hero-image-caption">
+                    <span class="image-eyebrow">THE NEW GENERATION OF INDIAN RAILWAYS</span>
+                    <h1>Every journey<br>has a destination.</h1>
+                    <p>Discover India, one railway journey at a time.</p>
+                </div>
+
+                <div class="image-credit">
+                    Image: Rajendra B. Aklekar / Wikimedia Commons
+                </div>
+
+            </div>
+
+            <div class="booking-panel" id="booking">
+
+                <div class="booking-panel-heading">
+                    <span class="eyebrow">PLAN YOUR JOURNEY</span>
+                    <h2>Where would you like to go?</h2>
+                    <p>Find trains and plan your next trip.</p>
+                </div>
+
+                <form id="searchForm" class="booking-form">
+
+                    <div class="station-fields">
+
+                        <div class="form-group">
+                            <label for="source">FROM</label>
+                            <div class="input-with-icon">
+                                <span class="field-icon">↗</span>
+                                <input
+                                    type="text"
+                                    id="source"
+                                    list="stationSuggestions"
+                                    placeholder="Departure station"
+                                    autocomplete="off"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="swap-control">
+                            <button
+                                type="button"
+                                id="swapStations"
+                                class="swap-button"
+                                aria-label="Swap departure and arrival stations"
+                                title="Swap stations"
+                            >⇄</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destination">TO</label>
+                            <div class="input-with-icon">
+                                <span class="field-icon">⌖</span>
+                                <input
+                                    type="text"
+                                    id="destination"
+                                    list="stationSuggestions"
+                                    placeholder="Arrival station"
+                                    autocomplete="off"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group date-group">
+                        <label for="journeyDate">JOURNEY DATE</label>
+                        <input type="date" id="journeyDate" required>
+                    </div>
+
+                    <button type="submit" class="search-btn">
+                        <span>Search trains</span>
+                        <span class="button-arrow">→</span>
+                    </button>
+
+                    <p class="booking-note">
+                        Search available trains for your selected route.
+                    </p>
+
+                </form>
+                <datalist id="stationSuggestions">
+                    <option value="Bengaluru"></option><option value="Bangalore"></option>
+                    <option value="Mysuru"></option><option value="Mysore"></option>
+                    <option value="Delhi"></option><option value="New Delhi"></option>
+                    <option value="Mumbai"></option><option value="Chennai"></option>
+                    <option value="Hyderabad"></option><option value="Kolkata"></option>
+                    <option value="Pune"></option><option value="Ahmedabad"></option>
+                    <option value="Jaipur"></option><option value="Bhopal"></option>
+                    <option value="Lucknow"></option><option value="Kochi"></option>
+                    <option value="Mangaluru"></option><option value="Hubballi"></option>
+                    <option value="Vijayawada"></option><option value="Visakhapatnam"></option>
+                </datalist>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRUST STRIP -->
+    <section class="trust-strip">
+        <div class="trust-item">
+            <span class="trust-symbol">01</span>
+            <div>
+                <strong>Simple search</strong>
+                <small>Find trains by route and date</small>
+            </div>
+        </div>
+
+        <div class="trust-item">
+            <span class="trust-symbol">02</span>
+            <div>
+                <strong>Easy reservations</strong>
+                <small>Choose your preferred class</small>
+            </div>
+        </div>
+
+        <div class="trust-item">
+            <span class="trust-symbol">03</span>
+            <div>
+                <strong>Manage tickets</strong>
+                <small>Access bookings using your account</small>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SEARCH RESULTS -->
+    <section class="results-section" id="searchResults">
+        <div id="searchMessage"></div>
+    </section>
+
+
+    <!-- MY BOOKINGS -->
+    <section class="account-section" id="myBookings" style="display:none;">
+
+        <div class="section-heading">
+            <span class="eyebrow">YOUR ACCOUNT</span>
+            <h2>My bookings</h2>
+            <p>View and manage your railway reservations.</p>
+        </div>
+
+        <div class="pnr-panel">
+            <div class="form-group">
+                <label for="pnrSearch">CHECK TICKET USING PNR</label>
+
+                <div class="pnr-search-box">
+                    <input
+                        type="number"
+                        id="pnrSearch"
+                        placeholder="Enter your PNR number"
+                    >
+
+                    <button type="button" id="pnrSearchBtn" class="search-btn">
+                        Search PNR
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="pnrResult"></div>
+
+        <div class="bookings-heading">
+            <div>
+                <span class="eyebrow">RESERVATION HISTORY</span>
+                <h2>Your tickets</h2>
+            </div>
+
+            <button type="button" id="refreshBookingsBtn" class="secondary-btn">
+                ↻ Refresh
+            </button>
+        </div>
+
+        <div id="bookingsMessage"></div>
+        <div id="bookingsContainer"></div>
+
+    </section>
+
+
+    <!-- FEATURED TRAINS -->
+    <section class="featured-section" id="featured-trains">
+
+        <div class="section-heading">
+            <span class="eyebrow">EXPERIENCE INDIAN RAILWAYS</span>
+            <h2>Iconic journeys. Remarkable trains.</h2>
+            <p>A closer look at some of India's best-known express services.</p>
+        </div>
+
+        <div class="train-showcase">
+
+            <article class="showcase-card">
+                <div class="showcase-image">
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:FilePath/Vande%20Bharat%20Express%20train.jpg"
+                        alt="Indian Vande Bharat Express train"
+                        loading="lazy"
+                    >
+                    <span class="showcase-label">SEMI HIGH-SPEED</span>
+                </div>
+
+                <div class="showcase-content">
+                    <span class="eyebrow">MODERN INDIA</span>
+                    <h3>Vande Bharat Express</h3>
+                    <p>
+                        A modern train experience with a distinctive
+                        design and contemporary passenger facilities.
+                    </p>
+                    <a href="#booking" class="text-link">
+                        Explore your journey <span>→</span>
+                    </a>
+                </div>
+            </article>
+
+            <article class="showcase-card">
+                <div class="showcase-image">
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:FilePath/Rajdhani%20Express.jpg"
+                        alt="Dibrugarh New Delhi Rajdhani Express"
+                        loading="lazy"
+                    >
+                    <span class="showcase-label">PREMIUM EXPRESS</span>
+                </div>
+
+                <div class="showcase-content">
+                    <span class="eyebrow">LONG-DISTANCE TRAVEL</span>
+                    <h3>Rajdhani Express</h3>
+                    <p>
+                        One of India's most recognised premium
+                        long-distance train services.
+                    </p>
+                    <a href="#booking" class="text-link">
+                        Explore your journey <span>→</span>
+                    </a>
+                </div>
+            </article>
+
+        </div>
+
+        <p class="photo-note">
+            Train photographs are used for presentation and do not
+            indicate live availability or affiliation with Indian Railways.
+        </p>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features-section" id="features">
+
+        <div class="section-heading">
+            <span class="eyebrow">BUILT AROUND YOUR JOURNEY</span>
+            <h2>A simpler way to manage train travel.</h2>
+            <p>Essential reservation features in one place.</p>
+        </div>
+
+        <div class="features-grid">
+
+            <article class="feature-card">
+                <span class="feature-number">01</span>
+                <h3>Train search</h3>
+                <p>
+                    Search trains using your departure station,
+                    destination and journey date.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <span class="feature-number">02</span>
+                <h3>Ticket booking</h3>
+                <p>
+                    Select a train, choose your travel class
+                    and reserve an available seat.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <span class="feature-number">03</span>
+                <h3>PNR lookup</h3>
+                <p>
+                    Retrieve your ticket details using
+                    your unique PNR number.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <span class="feature-number">04</span>
+                <h3>Booking management</h3>
+                <p>
+                    View your reservations and manage
+                    your bookings through your account.
+                </p>
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- AUTHENTICATION MODAL -->
+<div id="authModal" class="auth-modal">
+
+    <div class="auth-box">
+
+        <button type="button" id="closeAuth" class="close-auth"
+                aria-label="Close">&times;</button>
+
+        <div class="modal-brand">
+            <svg class="brand-train-icon" viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M13 5h38a6 6 0 0 1 6 6v23a6 6 0 0 1-6 6H13a6 6 0 0 1-6-6V11a6 6 0 0 1 6-6Z" fill="none" stroke="currentColor" stroke-width="3"/>
+                <path d="M14 14h36v13H14z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                <path d="M20 39l-6 6M44 39l6 6M21 33h22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="20" cy="33" r="2" fill="currentColor"/>
+                <circle cx="44" cy="33" r="2" fill="currentColor"/>
+                <path d="M25 5V2m14 3V2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span class="brand-name">
+                YATRA<span>RAIL</span>
+                <small>INDIAN RAILWAYS</small>
+            </span>
+        </div>
+
+        <span class="eyebrow">YOUR JOURNEY STARTS HERE</span>
+        <h2 id="authTitle">Login to your account</h2>
+        <p id="authSubtitle">Welcome back. Continue your journey.</p>
+
+        <form id="authForm">
+
+            <div class="auth-field">
+                <label for="authUsername">Username</label>
+                <input
+                    type="text"
+                    id="authUsername"
+                    placeholder="Enter username"
+                    required
+                >
+            </div>
+
+            <div class="auth-field">
+                <label for="authPassword">Password</label>
+                <input
+                    type="password"
+                    id="authPassword"
+                    placeholder="Enter password"
+                    required
+                >
+            </div>
+
+            <div id="premiumField" class="auth-field" hidden>
+                <label>
+                    <input type="checkbox" id="premiumCheckbox">
+                    Register as Premium Passenger
+                </label>
+            </div>
+
+            <p id="authMessage" role="status"></p>
+
+            <button type="submit" id="authSubmit" class="search-btn">
+                Login
+            </button>
+
+        </form>
+
+        <p id="authSwitch" class="auth-switch">
+            Don't have an account?
+            <a href="#" id="switchAuth">Create one</a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- BOOKING MODAL -->
+<div id="bookingModal" class="booking-modal" style="display:none;">
+
+    <div class="booking-modal-content">
+
+        <button type="button" id="closeBookingModal"
+                class="close-modal" aria-label="Close">
+            &times;
+        </button>
+
+        <span class="eyebrow">RESERVE YOUR SEAT</span>
+        <h2>Complete your booking</h2>
+        <p class="booking-subtitle">
+            Confirm your journey details below.
+        </p>
+
+        <div class="selected-train-details">
+            <h3 id="bookingTrainName">Train Name</h3>
+            <p id="bookingTrainRoute">Source → Destination</p>
+            <p id="bookingTrainNumber">Train Number: --</p>
+        </div>
+
+        <form id="bookingForm">
+
+            <label for="bookingJourneyDate">Journey date</label>
+            <input type="date" id="bookingJourneyDate" required>
+
+            <label for="bookingSeatNumber">Seat number</label>
+            <input
+                type="number"
+                id="bookingSeatNumber"
+                min="1"
+                max="100"
+                placeholder="Enter seat number"
+                required
+            >
+
+            <label for="bookingClass">Travel class</label>
+            <select id="bookingClass" required>
+                <option value="Sleeper">Sleeper</option>
+                <option value="AC">AC</option>
+            </select>
+
+            <div id="classSeatAvailability" class="class-seat-availability">
+                <h4 id="availabilityHeading">Sleeper Availability</h4>
+                <p id="availabilityCount">100 / 100 seats available</p>
+            </div>
+
+            <div class="fare-preview">
+                <span>Estimated fare</span>
+                <strong id="bookingFare">₹0</strong>
+            </div>
+
+            <p id="bookingError" class="booking-error"></p>
+
+            <button type="submit" id="confirmBookingBtn" class="search-btn">
+                Confirm booking
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer class="site-footer">
+
+    <div class="footer-main">
+
+        <a href="#home" class="brand footer-brand" aria-label="YatraRail home">
+            <svg class="brand-train-icon" viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M13 5h38a6 6 0 0 1 6 6v23a6 6 0 0 1-6 6H13a6 6 0 0 1-6-6V11a6 6 0 0 1 6-6Z" fill="none" stroke="currentColor" stroke-width="3"/>
+                <path d="M14 14h36v13H14z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                <path d="M20 39l-6 6M44 39l6 6M21 33h22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="20" cy="33" r="2" fill="currentColor"/>
+                <circle cx="44" cy="33" r="2" fill="currentColor"/>
+                <path d="M25 5V2m14 3V2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+
+            <span class="brand-name">
+                YATRA<span>RAIL</span>
+                <small>INDIAN RAILWAYS</small>
+            </span>
+        </a>
+
+        <p>A considered approach to railway reservations.</p>
+
+        <a href="admin.html" class="footer-admin-link">Admin console</a>
+
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 YatraRail. Academic project.</span>
+        <span>Developed using C++, Crow, MySQL, HTML, CSS and JavaScript.</span>
+    </div>
+
+</footer>
+
+
+<script src="js/script.js"></script>
+
+<script>
+    // Swap the station fields using the compact control.
+    document.addEventListener("DOMContentLoaded", function () {
+        const source = document.getElementById("source");
+        const destination = document.getElementById("destination");
+        const swap = document.getElementById("swapStations");
+
+        if (source && destination && swap) {
+            swap.addEventListener("click", function () {
+                const currentSource = source.value;
+                source.value = destination.value;
+                destination.value = currentSource;
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

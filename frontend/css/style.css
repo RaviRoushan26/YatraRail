@@ -1,0 +1,1730 @@
+
+/* =====================================================
+   AAROHAN RAIL
+   Premium Indian Railway Reservation Portal
+   ===================================================== */
+
+:root {
+    --navy: #102b4e;
+    --navy-deep: #0a1e36;
+    --navy-soft: #1b416d;
+    --orange: #d88b35;
+    --orange-light: #f5a94f;
+
+    --ink: #172536;
+    --muted: #718096;
+    --white: #ffffff;
+    --paper: #f6f7f9;
+    --line: #e4e8ee;
+    --success: #18845b;
+    --danger: #c74747;
+
+    --shadow: 0 16px 45px rgba(16, 43, 78, 0.08);
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom: 1px solid rgba(16, 43, 78, 0.08);
+    backdrop-filter: blur(14px);
+}
+
+.navbar {
+    width: min(1280px, calc(100% - 64px));
+    min-height: 78px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    flex-shrink: 0;
+}
+
+.brand-mark {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--navy);
+    color: white;
+    font-family: "Manrope", sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    border-bottom: 3px solid var(--orange);
+}
+
+.brand-name {
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+    line-height: 1.1;
+}
+
+.brand-name small {
+    display: block;
+    margin-top: 4px;
+    color: var(--orange);
+    font-size: 9px;
+    letter-spacing: 3.8px;
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #536174;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color .2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--navy);
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-buttons button,
+.admin-link {
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.admin-link {
+    color: var(--navy);
+    border-color: var(--line);
+}
+
+.admin-link:hover {
+    border-color: var(--navy);
+}
+
+.login-btn {
+    background: white;
+    color: var(--navy);
+    border-color: var(--line) !important;
+}
+
+.login-btn:hover {
+    background: var(--paper);
+}
+
+.register-btn {
+    background: var(--navy);
+    color: white;
+}
+
+.register-btn:hover {
+    background: var(--navy-soft);
+}
+
+
+/* =====================================================
+   HERO AND BOOKING LAYOUT
+   ===================================================== */
+
+.hero-section {
+    background: #f5f6f8;
+    padding: 54px 0 58px;
+}
+
+.hero-layout {
+    width: min(1280px, calc(100% - 64px));
+    margin: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.13fr) minmax(410px, .87fr);
+    align-items: stretch;
+    gap: 26px;
+    min-height: 510px;
+}
+
+/* Left image */
+
+.hero-visual {
+    position: relative;
+    min-height: 510px;
+    overflow: hidden;
+    border-radius: 13px;
+    background: var(--navy);
+    isolation: isolate;
+}
+
+.hero-train-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -2;
+}
+
+.hero-image-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5, 20, 38, .84) 0%,
+            rgba(5, 20, 38, .48) 52%,
+            rgba(5, 20, 38, .08) 100%
+        ),
+        linear-gradient(
+            0deg,
+            rgba(5, 20, 38, .50),
+            transparent 60%
+        );
+}
+
+.hero-image-caption {
+    position: absolute;
+    left: 48px;
+    right: 35px;
+    bottom: 65px;
+    color: white;
+    max-width: 530px;
+}
+
+.image-eyebrow,
+.eyebrow {
+    display: inline-block;
+    color: var(--orange);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hero-image-caption h1 {
+    margin: 15px 0 14px;
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(34px, 4vw, 54px);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -1.8px;
+}
+
+.hero-image-caption p {
+    max-width: 390px;
+    color: rgba(255, 255, 255, .86);
+    font-size: 15px;
+}
+
+.image-credit {
+    position: absolute;
+    right: 13px;
+    bottom: 10px;
+    color: rgba(255,255,255,.75);
+    font-size: 9px;
+}
+
+
+/* Right booking panel */
+
+.booking-panel {
+    align-self: center;
+    min-width: 0;
+    background: white;
+    border: 1px solid #e8ebef;
+    border-radius: 13px;
+    padding: 38px 34px;
+    box-shadow: var(--shadow);
+}
+
+.booking-panel-heading {
+    margin-bottom: 30px;
+}
+
+.booking-panel-heading h2 {
+    margin: 9px 0 5px;
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 25px;
+    line-height: 1.25;
+    letter-spacing: -.7px;
+}
+
+.booking-panel-heading p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.station-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+    align-items: end;
+    gap: 8px;
+}
+
+.form-group {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label,
+.booking-modal-content label,
+.auth-field label {
+    color: #536174;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.form-group input,
+.auth-field input,
+.booking-modal-content input,
+.booking-modal-content select {
+    width: 100%;
+    min-width: 0;
+    height: 49px;
+    padding: 0 13px;
+    border: 1px solid #dce2e9;
+    border-radius: 7px;
+    background: white;
+    color: var(--ink);
+    outline: none;
+    font-size: 13px;
+    transition: border .2s, box-shadow .2s;
+}
+
+.form-group input::placeholder,
+.auth-field input::placeholder {
+    color: #9aa5b3;
+}
+
+.form-group input:focus,
+.auth-field input:focus,
+.booking-modal-content input:focus,
+.booking-modal-content select:focus {
+    border-color: var(--navy-soft);
+    box-shadow: 0 0 0 3px rgba(27, 65, 109, .09);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon input {
+    padding-left: 36px;
+}
+
+.field-icon {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    transform: translateY(-50%);
+    color: var(--orange);
+    font-size: 15px;
+    pointer-events: none;
+}
+
+
+/* Compact circular swap */
+
+.swap-control {
+    height: 49px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swap-button {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dce2e9;
+    border-radius: 50%;
+    background: white;
+    color: var(--navy);
+    font-size: 18px;
+    line-height: 1;
+    transition: .2s ease;
+}
+
+.swap-button:hover {
+    border-color: var(--orange);
+    background: #fff8ef;
+    color: #a86116;
+    transform: rotate(180deg);
+}
+
+.date-group input {
+    color-scheme: light;
+}
+
+.search-btn {
+    min-height: 49px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 7px;
+    background: var(--navy);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background .2s, transform .2s;
+}
+
+.search-btn:hover {
+    background: var(--navy-soft);
+    transform: translateY(-1px);
+}
+
+.button-arrow {
+    color: var(--orange-light);
+    font-size: 19px;
+}
+
+.booking-note {
+    margin-top: -10px;
+    color: #929dac;
+    text-align: center;
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   TRUST STRIP
+   ===================================================== */
+
+.trust-strip {
+    width: min(1150px, calc(100% - 64px));
+    margin: auto;
+    padding: 25px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--line);
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    padding: 6px 15px;
+    border-right: 1px solid var(--line);
+}
+
+.trust-item:last-child {
+    border-right: 0;
+}
+
+.trust-symbol {
+    color: var(--orange);
+    font-family: "Manrope", sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.trust-item strong,
+.trust-item small {
+    display: block;
+}
+
+.trust-item strong {
+    color: var(--navy);
+    font-size: 12px;
+}
+
+.trust-item small {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   COMMON SECTION HEADINGS
+   ===================================================== */
+
+.section-heading {
+    margin-bottom: 32px;
+}
+
+.section-heading h2 {
+    margin: 9px 0 7px;
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -.8px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   SEARCH RESULTS AND TRAIN CARDS
+   ===================================================== */
+
+.results-section {
+    width: min(1180px, calc(100% - 64px));
+    margin: auto;
+}
+
+#searchMessage {
+    padding: 35px 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+#searchMessage > h2 {
+    margin-bottom: 5px;
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 25px;
+}
+
+#searchMessage > p {
+    margin-bottom: 18px;
+}
+
+.train-card {
+    position: relative;
+    margin: 15px 0;
+    padding: 23px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px 24px;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: white;
+    box-shadow: 0 5px 20px rgba(16, 43, 78, .035);
+    transition: box-shadow .2s, border-color .2s;
+}
+
+.train-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 10px 26px rgba(16, 43, 78, .07);
+}
+
+.train-card h3 {
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 18px;
+}
+
+.train-card > p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.train-card .seat-availability {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.seat-category {
+    padding: 13px 15px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fafbfd;
+}
+
+.seat-category h4 {
+    color: var(--navy);
+    font-size: 12px;
+}
+
+.seat-category p {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.book-train-btn {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    min-width: 125px;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 7px;
+    background: var(--navy);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.book-train-btn:hover {
+    background: var(--navy-soft);
+}
+
+
+/* =====================================================
+   FEATURED TRAINS
+   ===================================================== */
+
+.featured-section {
+    padding: 86px 0 90px;
+    background: #f7f8fa;
+}
+
+.featured-section > .section-heading,
+.train-showcase,
+.photo-note {
+    width: min(1180px, calc(100% - 64px));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.train-showcase {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.showcase-card {
+    overflow: hidden;
+    border: 1px solid #e7eaf0;
+    border-radius: 12px;
+    background: white;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.showcase-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+}
+
+.showcase-image {
+    position: relative;
+    height: 265px;
+    overflow: hidden;
+    background: #dce3eb;
+}
+
+.showcase-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .5s ease;
+}
+
+.showcase-card:hover .showcase-image img {
+    transform: scale(1.035);
+}
+
+.showcase-label {
+    position: absolute;
+    left: 17px;
+    bottom: 16px;
+    padding: 7px 10px;
+    border-radius: 4px;
+    background: rgba(10, 30, 54, .88);
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.showcase-content {
+    padding: 24px 25px 26px;
+}
+
+.showcase-content h3 {
+    margin: 7px 0;
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.showcase-content p {
+    max-width: 470px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 17px;
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.text-link span {
+    color: var(--orange);
+    font-size: 18px;
+    transition: transform .2s;
+}
+
+.text-link:hover span {
+    transform: translateX(4px);
+}
+
+.photo-note {
+    margin-top: 17px;
+    color: #929dac;
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   FEATURES
+   ===================================================== */
+
+.features-section {
+    width: min(1180px, calc(100% - 64px));
+    margin: auto;
+    padding: 85px 0 95px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.feature-card {
+    min-height: 190px;
+    padding: 24px 21px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: white;
+    transition: border-color .2s, transform .2s;
+}
+
+.feature-card:hover {
+    border-color: #c6d0dc;
+    transform: translateY(-3px);
+}
+
+.feature-number {
+    color: var(--orange);
+    font-family: "Manrope", sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.feature-card h3 {
+    margin: 17px 0 7px;
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+}
+
+.feature-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   MY BOOKINGS AND PNR
+   ===================================================== */
+
+.account-section {
+    width: min(1180px, calc(100% - 64px));
+    margin: auto;
+    padding: 65px 0;
+}
+
+.pnr-panel {
+    max-width: 650px;
+    margin-bottom: 28px;
+    padding: 23px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fafbfd;
+}
+
+.pnr-search-box {
+    display: flex;
+    gap: 10px;
+}
+
+.pnr-search-box input {
+    flex: 1;
+    min-width: 0;
+    height: 47px;
+    padding: 0 13px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+}
+
+.pnr-search-box .search-btn {
+    width: auto;
+    min-width: 130px;
+}
+
+.bookings-heading {
+    margin: 35px 0 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bookings-heading h2 {
+    margin-top: 5px;
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 23px;
+}
+
+.secondary-btn {
+    padding: 10px 15px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: white;
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.secondary-btn:hover {
+    background: var(--paper);
+}
+
+
+/* =====================================================
+   AUTHENTICATION MODAL
+   ===================================================== */
+
+.auth-modal,
+.booking-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(5, 19, 35, .68);
+    backdrop-filter: blur(5px);
+}
+
+.auth-box,
+.booking-modal-content {
+    position: relative;
+    width: min(440px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 37px;
+    border-radius: 13px;
+    background: white;
+    box-shadow: 0 25px 80px rgba(0,0,0,.22);
+}
+
+.modal-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.auth-box h2,
+.booking-modal-content h2 {
+    margin: 10px 0 5px;
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+.auth-box > p,
+.booking-subtitle {
+    margin-bottom: 22px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.close-auth,
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: #f1f3f6;
+    color: var(--navy);
+    font-size: 22px;
+}
+
+.close-auth:hover,
+.close-modal:hover {
+    background: #e4e8ee;
+}
+
+.auth-field {
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-field input {
+    height: 47px;
+}
+
+.auth-field input[type="checkbox"] {
+    width: auto;
+    height: auto;
+}
+
+.auth-field label:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0;
+}
+
+#authMessage {
+    margin: 10px 0;
+    font-size: 12px;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    color: var(--muted);
+    text-align: center;
+    font-size: 12px;
+}
+
+.auth-switch a {
+    color: var(--navy);
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   BOOKING MODAL
+   ===================================================== */
+
+.booking-modal-content {
+    width: min(490px, 100%);
+}
+
+.booking-modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.booking-modal-content label {
+    margin-top: 7px;
+}
+
+.selected-train-details {
+    margin: 20px 0;
+    padding: 17px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px;
+    background: #fafbfd;
+}
+
+.selected-train-details h3 {
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 17px;
+}
+
+.selected-train-details p {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.class-seat-availability {
+    margin-top: 9px;
+    padding: 13px;
+    border-radius: 7px;
+    background: #f3f6f9;
+}
+
+.class-seat-availability h4 {
+    color: var(--navy);
+    font-size: 12px;
+}
+
+.class-seat-availability p {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.fare-preview {
+    margin: 10px 0;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.fare-preview span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.fare-preview strong {
+    color: var(--navy);
+    font-size: 19px;
+}
+
+.booking-error {
+    color: var(--danger);
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.site-footer {
+    padding: 35px max(32px, calc((100% - 1180px) / 2));
+    background: var(--navy-deep);
+    color: white;
+}
+
+.footer-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 27px;
+}
+
+.footer-brand .brand-name {
+    color: white;
+}
+
+.footer-main > p {
+    color: #b7c3d2;
+    font-size: 12px;
+}
+
+.footer-admin-link {
+    color: #dce5ef;
+    font-size: 11px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.footer-bottom {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    border-top: 1px solid rgba(255,255,255,.13);
+    color: #9eacbd;
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1050px) {
+
+    .navbar {
+        width: min(100% - 40px, 1280px);
+        gap: 18px;
+    }
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .hero-layout {
+        width: calc(100% - 40px);
+        grid-template-columns: minmax(0, 1fr) minmax(370px, .9fr);
+        gap: 18px;
+    }
+
+    .booking-panel {
+        padding: 29px 23px;
+    }
+
+    .hero-visual {
+        min-height: 470px;
+    }
+
+    .hero-image-caption {
+        left: 30px;
+        bottom: 48px;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .navbar {
+        min-height: 70px;
+        flex-wrap: wrap;
+        padding: 13px 0;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+    }
+
+    .nav-buttons {
+        margin-left: auto;
+    }
+
+    .nav-buttons button,
+    .admin-link {
+        padding: 9px 11px;
+        font-size: 11px;
+    }
+
+    .hero-section {
+        padding: 28px 0 38px;
+    }
+
+    .hero-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+        min-height: 400px;
+    }
+
+    .booking-panel {
+        width: 100%;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .trust-strip {
+        width: calc(100% - 40px);
+    }
+
+    .trust-item {
+        justify-content: flex-start;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 560px) {
+
+    .navbar {
+        width: calc(100% - 30px);
+    }
+
+    .brand-name {
+        font-size: 14px;
+    }
+
+    .brand-mark {
+        width: 34px;
+        height: 34px;
+    }
+
+    .nav-links {
+        gap: 16px;
+        overflow-x: auto;
+        justify-content: flex-start;
+        white-space: nowrap;
+    }
+
+    .nav-links a {
+        font-size: 11px;
+    }
+
+    .nav-buttons {
+        gap: 5px;
+    }
+
+    .nav-buttons button,
+    .admin-link {
+        padding: 8px 9px;
+        font-size: 10px;
+    }
+
+    .hero-layout {
+        width: calc(100% - 28px);
+    }
+
+    .hero-visual {
+        min-height: 350px;
+    }
+
+    .hero-train-image {
+        object-position: center;
+    }
+
+    .hero-image-caption {
+        left: 22px;
+        right: 20px;
+        bottom: 42px;
+    }
+
+    .hero-image-caption h1 {
+        font-size: 36px;
+    }
+
+    .hero-image-caption p {
+        font-size: 12px;
+    }
+
+    .booking-panel {
+        padding: 25px 18px;
+    }
+
+    .booking-panel-heading h2 {
+        font-size: 22px;
+    }
+
+    .station-fields {
+        grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
+        gap: 5px;
+    }
+
+    .form-group input {
+        padding-left: 9px;
+        font-size: 11px;
+    }
+
+    .input-with-icon input {
+        padding-left: 29px;
+    }
+
+    .field-icon {
+        left: 9px;
+    }
+
+    .swap-button {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .trust-strip {
+        grid-template-columns: 1fr;
+        gap: 13px;
+        padding: 20px 0;
+    }
+
+    .trust-item {
+        border-right: 0;
+    }
+
+    .featured-section,
+    .features-section {
+        padding: 58px 0;
+    }
+
+    .featured-section > .section-heading,
+    .train-showcase,
+    .photo-note,
+    .features-section,
+    .results-section,
+    .account-section {
+        width: calc(100% - 30px);
+    }
+
+    .train-showcase {
+        grid-template-columns: 1fr;
+    }
+
+    .showcase-image {
+        height: 220px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .train-card {
+        grid-template-columns: 1fr;
+    }
+
+    .book-train-btn {
+        grid-column: auto;
+        grid-row: auto;
+        width: 100%;
+    }
+
+    .train-card .seat-availability {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .pnr-search-box {
+        flex-direction: column;
+    }
+
+    .pnr-search-box .search-btn {
+        width: 100%;
+    }
+
+    .footer-main,
+    .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .footer-main {
+        gap: 14px;
+    }
+
+    .site-footer {
+        padding: 30px 20px;
+    }
+
+    .auth-box,
+    .booking-modal-content {
+        padding: 29px 21px;
+    }
+}
+
+
+/* =========================================
+   AAROHAN RAIL - FINAL LAYOUT CORRECTIONS
+   ========================================= */
+
+/* Keep search results visible below the navbar */
+#searchMessage {
+    scroll-margin-top: 105px;
+    width: min(1160px, 92%);
+    margin: 38px auto 70px;
+}
+
+#searchMessage > h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+#searchMessage > p {
+    margin-bottom: 22px;
+}
+
+/* Professional compact train result cards */
+#searchMessage .train-card {
+    display: grid !important;
+    grid-template-columns: 220px minmax(0, 1fr);
+    align-items: start;
+    gap: 8px 24px;
+
+    width: 100%;
+    max-width: 100%;
+    margin: 22px 0;
+    padding: 20px;
+
+    background: #ffffff;
+    border: 1px solid #e1e7ef;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(16, 43, 78, 0.07);
+    text-align: left;
+}
+
+/* Smaller train photo on the left */
+#searchMessage .train-card-image {
+    grid-column: 1;
+    grid-row: 1 / span 6;
+
+    display: block;
+    width: 220px !important;
+    height: 148px !important;
+    max-height: 148px;
+    margin: 0 !important;
+
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    background: #edf1f5;
+}
+
+/* Train information on the right */
+#searchMessage .train-card h3,
+#searchMessage .train-card > p {
+    grid-column: 2;
+    margin: 0 0 4px !important;
+    text-align: left;
+}
+
+#searchMessage .train-card h3 {
+    color: #102b4e;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+#searchMessage .train-card > p {
+    color: #637187;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Seat availability across the card */
+#searchMessage .seat-availability {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 12px 0 4px !important;
+}
+
+#searchMessage .seat-category {
+    padding: 14px 16px;
+    background: #f6f8fb;
+    border: 1px solid #e4eaf1;
+    border-radius: 10px;
+}
+
+#searchMessage .seat-category h4 {
+    margin-bottom: 6px;
+    color: #173b70;
+    font-size: 14px;
+}
+
+#searchMessage .seat-category p {
+    margin: 0 !important;
+    font-size: 13px;
+}
+
+/* Booking button */
+#searchMessage .book-train-btn {
+    grid-column: 2;
+    justify-self: start;
+
+    margin: 8px 0 0 !important;
+    padding: 12px 25px;
+
+    background: #102b4e;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#searchMessage .book-train-btn:hover {
+    background: #244d78;
+}
+
+/* =========================================
+   MY BOOKINGS - TICKET CARDS
+   ========================================= */
+
+#myBookings {
+    padding: 70px max(5%, calc((100% - 1160px) / 2));
+    background: #f5f7fa;
+}
+
+#myBookings .section-heading {
+    margin-bottom: 28px;
+}
+
+#myBookings .section-heading h2 {
+    color: #102b4e;
+    font-size: 34px;
+}
+
+#myBookings #pnrResult,
+#myBookings #bookingsMessage {
+    width: 100%;
+    max-width: 100%;
+    margin: 18px 0;
+}
+
+#myBookings #bookingsContainer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    width: 100%;
+}
+
+/* Each ticket gets a proper card */
+#myBookings .booking-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 18px;
+
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 26px;
+
+    background: #ffffff;
+    border: 1px solid #e0e7f0;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(16, 43, 78, 0.055);
+    text-align: left;
+}
+
+#myBookings .booking-card h3 {
+    grid-column: 1 / -1;
+    margin: 0 0 8px;
+    padding-bottom: 16px;
+
+    color: #102b4e;
+    font-size: 21px;
+    border-bottom: 1px solid #e8edf3;
+}
+
+#myBookings .booking-card p {
+    display: block;
+    width: auto;
+    margin: 0;
+    padding: 11px 13px;
+
+    background: #f7f9fc;
+    border-radius: 8px;
+    color: #526176;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Ticket status */
+#myBookings .booking-card .booking-status {
+    grid-column: 1;
+    justify-self: start;
+
+    width: auto;
+    margin-top: 8px;
+    padding: 8px 14px;
+
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+#myBookings .booking-card .booking-status.confirmed {
+    background: #e7f6ed;
+    color: #187344;
+}
+
+#myBookings .booking-card .booking-status.cancelled {
+    background: #fdeaea;
+    color: #b52c2c;
+}
+
+/* Cancel button */
+#myBookings .booking-card .cancel-ticket-btn {
+    grid-column: 2;
+    justify-self: end;
+    align-self: center;
+
+    margin: 8px 0 0;
+    padding: 11px 20px;
+
+    background: #ffffff;
+    color: #c03939;
+    border: 1px solid #e3baba;
+    border-radius: 8px;
+
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#myBookings .booking-card .cancel-ticket-btn:hover {
+    background: #fff1f1;
+}
+
+/* Refresh button */
+#myBookings #refreshBookingsBtn {
+    margin: 0 0 24px;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+/* =========================================
+   RESPONSIVE CORRECTIONS
+   ========================================= */
+
+@media (max-width: 700px) {
+    #searchMessage .train-card {
+        grid-template-columns: 1fr;
+    }
+
+    #searchMessage .train-card-image {
+        grid-column: 1;
+        grid-row: auto;
+        width: 100% !important;
+        height: 180px !important;
+    }
+
+    #searchMessage .train-card h3,
+    #searchMessage .train-card > p,
+    #searchMessage .book-train-btn {
+        grid-column: 1;
+    }
+
+    #searchMessage .seat-availability {
+        grid-template-columns: 1fr;
+    }
+
+    #myBookings {
+        padding: 45px 5%;
+    }
+
+    #myBookings .booking-card {
+        grid-template-columns: 1fr;
+        padding: 18px;
+    }
+
+    #myBookings .booking-card h3,
+    #myBookings .booking-card .booking-status,
+    #myBookings .booking-card .cancel-ticket-btn {
+        grid-column: 1;
+    }
+
+    #myBookings .booking-card .cancel-ticket-btn {
+        justify-self: start;
+    }
+}
+
+#myBookings .booking-card .booking-detail {
+    display: block;
+    margin: 0;
+    padding: 11px 13px;
+    background: #f7f9fc;
+    border-radius: 8px;
+    color: #526176;
+    font-size: 14px;
+}
+
+
+
+/* YatraRail: stable train-result layout (image | details | booking action) */
+#searchMessage .train-card{
+  display:grid !important;
+  grid-template-columns:250px minmax(0,1fr) auto !important;
+  grid-template-rows:auto auto !important;
+  align-items:start !important;
+  gap:14px 24px !important;
+  padding:20px !important;
+}
+#searchMessage .train-card-image{
+  grid-column:1 !important;grid-row:1 !important;
+  width:250px !important;height:165px !important;max-height:165px !important;
+  object-fit:cover !important;object-position:center !important;
+}
+#searchMessage .train-card-details{
+  grid-column:2 !important;grid-row:1 !important;min-width:0;
+  display:flex;flex-direction:column;gap:7px;
+}
+#searchMessage .train-card-details h3,
+#searchMessage .train-card-details p{margin:0 !important;grid-column:auto !important;}
+#searchMessage .train-card .book-train-btn{
+  grid-column:3 !important;grid-row:1 !important;
+  align-self:start !important;justify-self:end !important;
+  position:static !important;margin:0 !important;white-space:nowrap;
+}
+#searchMessage .train-card .seat-availability{
+  grid-column:1 / -1 !important;grid-row:2 !important;
+}
+#searchMessage{scroll-margin-top:115px;}
+@media(max-width:760px){
+  #searchMessage .train-card{grid-template-columns:1fr !important;}
+  #searchMessage .train-card-image,#searchMessage .train-card-details,
+  #searchMessage .train-card .book-train-btn,#searchMessage .train-card .seat-availability{
+    grid-column:1 !important;grid-row:auto !important;
+  }
+  #searchMessage .train-card-image{width:100% !important;height:190px !important;max-height:190px !important;}
+  #searchMessage .train-card .book-train-btn{justify-self:start !important;}
+  #searchMessage .train-card .seat-availability{grid-template-columns:1fr !important;}
+}
