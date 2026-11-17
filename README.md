@@ -276,18 +276,63 @@ The application has been tested locally for the following functionalities:
 
 ---
 
-## 9. Screenshots
 
-Screenshots of the application interface will be added here.
+## Application Screenshots
 
-Planned screenshots:
+The following screenshots demonstrate the major features and modules of the YatraRail Railway Reservation Web Application.
 
-- Passenger registration and login page
-- Train search interface
-- Train search results
-- Ticket booking interface
-- PNR lookup
-- Admin dashboard
+### 1. Homepage
+
+![YatraRail Homepage](screenshots/homepage.png)
+
+### 2. Passenger Module
+
+**Passenger Login**
+
+![Passenger Login](screenshots/passenger-login.png)
+
+**Passenger Registration**
+
+![Passenger Registration](screenshots/passenger-registration.png)
+
+**Train Search Results**
+
+![Train Search Results](screenshots/train-search-results.png)
+
+**Ticket Booking**
+
+![Ticket Booking](screenshots/ticket-booking.png)
+
+**Booking Confirmation**
+
+![Booking Confirmation](screenshots/booking-confirmation.png)
+
+**PNR Status**
+
+![PNR Status](screenshots/pnr-status.png)
+
+**Ticket Cancellation**
+
+![Ticket Cancellation](screenshots/ticket-cancellation.png)
+
+### 3. Admin Module
+
+**Admin Dashboard**
+
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+**Train Management**
+
+![Admin Train Management](screenshots/admin-train-management.png)
+
+**Booking Management**
+
+![Admin Booking Management](screenshots/admin-booking-management.png)
+
+**Passenger Management**
+
+![Admin Passenger Management](screenshots/admin-passenger-management.png)
+
 
 ---
 
